@@ -11,19 +11,33 @@ var i18n = data.i18n;
 var buttons = data.buttons;
 var step = data.step;
 var tour = data.tour;
+var customData = step.customData;
+
+function cssMapper(selector) {
+  try {
+    if(customData.css && selector in customData.css) {
+      return customData.css[selector];
+    } else {
+      return selector;
+    }
+  }
+  catch (err) {
+    return selector;
+  }
+}
 %>
-<div class="hopscotch-bubble-container" style="width: <%= step.width %>px; padding: <%= step.padding %>px;">
-  <% if(tour.isTour){ %><span class="hopscotch-bubble-number"><%= i18n.stepNum %></span><% } %>
-  <div class="hopscotch-bubble-content">
-    <% if(step.title !== ''){ %><h3 class="hopscotch-title"><%= optEscape(step.title, tour.unsafe) %></h3><% } %>
-    <% if(step.content  !== ''){ %><div class="hopscotch-content"><%= optEscape(step.content, tour.unsafe) %></div><% } %>
+<div class="<%= cssMapper('hopscotch-bubble-container') %>" style="width: <%= step.width %>px; padding: <%= step.padding %>px;">
+  <% if(tour.isTour){ %><span class="<%= cssMapper('hopscotch-bubble-number') %>"><%= i18n.stepNum %></span><% } %>
+  <div class="<%= cssMapper('hopscotch-bubble-content') %>">
+    <% if(step.title !== ''){ %><h3 class="<%= cssMapper('hopscotch-title') %>"><%= optEscape(step.title, tour.unsafe) %></h3><% } %>
+    <% if(step.content  !== ''){ %><div class="<%= cssMapper('hopscotch-content') %>"><%= optEscape(step.content, tour.unsafe) %></div><% } %>
   </div>
-  <div class="hopscotch-actions">
-    <% if(buttons.showPrev){ %><button class="hopscotch-nav-button prev hopscotch-prev"><%= i18n.prevBtn %></button><% } %>
-    <% if(buttons.showCTA){ %><button class="hopscotch-nav-button next hopscotch-cta"><%= buttons.ctaLabel %></button><% } %>
-    <% if(buttons.showNext){ %><button class="hopscotch-nav-button next hopscotch-next"><%= i18n.nextBtn %></button><% } %>
+  <div class="<%= cssMapper('hopscotch-actions') %>">
+    <% if(buttons.showPrev){ %><button class="<%= cssMapper('hopscotch-nav-button') %> prev hopscotch-prev"><%= i18n.prevBtn %></button><% } %>
+    <% if(buttons.showCTA){ %><button class="<%= cssMapper('hopscotch-nav-button') %> next hopscotch-cta"><%= buttons.ctaLabel %></button><% } %>
+    <% if(buttons.showNext){ %><button class="<%= cssMapper('hopscotch-nav-button') %> next hopscotch-next"><%= i18n.nextBtn %></button><% } %>
   </div>
-  <% if(buttons.showClose){ %><button class="hopscotch-bubble-close hopscotch-close"><%= i18n.closeTooltip %></button><% } %>
+  <% if(buttons.showClose){ %><button class="<%= cssMapper('hopscotch-bubble-close') %> hopscotch-close"><%= i18n.closeTooltip %></button><% } %>
 </div>
 <div class="hopscotch-bubble-arrow-container hopscotch-arrow">
   <div class="hopscotch-bubble-arrow-border"></div>
